@@ -1,9 +1,5 @@
-from turret import Turret
-from wizard import Wizard
-
 TURRET_DATA = {
     "archer": {
-        "class": Turret,
         "animSheet":'assets/images/turrets/ArcherUnit_75px.png',
         "cursorImage": 'assets/images/turrets/ArcherUnit_75px_cursor.png',
         "buyCost": 100,
@@ -34,8 +30,7 @@ TURRET_DATA = {
             "damage": 6
         }},
     "crossbow": {
-            "class": Turret,
-            "animSheet":'assets/images/turrets/CrossbowUnit_75px.png', ####
+            "animSheet":'assets/images/turrets/CrossbowUnit75px.png', ####
             "cursorImage":'assets/images/turrets/CrossbowUnit_75px_cursor.png', ####
             "buyCost": 150,
             "upgradeCost": 100,
@@ -65,9 +60,8 @@ TURRET_DATA = {
                 "damage" : 15
             }},
     "wizard": {
-            "class": Wizard,
-            "animSheet":'assets/images/turrets/WizardUnit75px.png', ####
-            "cursorImage":'assets/images/turrets/WizardUnit75px_cursor.png', ####
+            "animSheet":'assets/images/turrets/WizardUnit_75px.png', ####
+            "cursorImage":'assets/images/turrets/WizardUnit_75px_cursor.png', ####
             "buyCost": 150,
             "upgradeCost": 100,
             "maxLevel":4,
