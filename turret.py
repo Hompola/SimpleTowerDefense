@@ -9,6 +9,7 @@ class Turret(pg.sprite.Sprite):
     self.upgradeLevel=1
     self.turretType = turretType
     self.turretTypeData=TURRET_DATA.get(turretType)
+    self.buyCost = self.turretTypeData.get("buyCost")
     self.upgradeCost=self.turretTypeData.get("upgradeCost")
     self.maxLevel= self.turretTypeData.get("maxLevel")
     self.range = self.turretTypeData.get(self.upgradeLevel).get("range")
@@ -43,7 +44,8 @@ class Turret(pg.sprite.Sprite):
     self.range_image = pg.Surface((self.range * 2, self.range * 2))
     self.range_image.fill((0, 0, 0))
     self.range_image.set_colorkey((0, 0, 0))
-    pg.draw.circle(self.range_image, "grey100", (self.range, self.range), self.range)
+    self.rangeImageColor="grey100"
+    pg.draw.circle(self.range_image, self.rangeImageColor, (self.range, self.range), self.range)
     self.range_image.set_alpha(100)
     self.range_rect = self.range_image.get_rect()
     self.range_rect.center = self.rect.center
@@ -119,7 +121,7 @@ class Turret(pg.sprite.Sprite):
             self.target.health -= self.damage ####
             #print("furthest: "+str(dist))
             return
-          elif self.targeting == "thoughest": ####
+          elif self.targeting == "strongest": ####
             if enemy.health > highestHealth:
               self.target = enemy
               highestHealth = enemy.health
@@ -128,17 +130,17 @@ class Turret(pg.sprite.Sprite):
       self.target.health -= self.damage  ####
       self.target.image.fill((190, 0, 0, 100), special_flags=pg.BLEND_ADD)
 
-  def UpdateRangeImage(self, color): ####
+  def UpdateRangeImage(self): ####
     self.range_image = pg.Surface((self.range * 2, self.range * 2))
     self.range_image.fill((0, 0, 0))
     self.range_image.set_colorkey((0, 0, 0))
-    pg.draw.circle(self.range_image, color, (self.range, self.range), self.range)
+    pg.draw.circle(self.range_image, self.rangeImageColor, (self.range, self.range), self.range)
     self.range_image.set_alpha(100)
     self.range_rect = self.range_image.get_rect()
     self.range_rect.center = self.rect.center
 
 
-  def Upgrade(self): ####
+  def Upgrade(self):
     if self.upgradeLevel<self.maxLevel:
       self.upgradeLevel+=1
     else: return
@@ -146,6 +148,11 @@ class Turret(pg.sprite.Sprite):
     self.range = self.turretTypeData.get(self.upgradeLevel).get("range")
     self.maxLevel = self.turretTypeData.get("maxLevel")
     self.cooldown = self.turretTypeData.get(self.upgradeLevel).get("cooldown")
-    self.UpdateRangeImage("grey100")
+    self.UpdateRangeImage()
     print(self.upgradeLevel)
     return self.upgradeLevel
+  
+  def ChangeTargeting(self, targeting, rangeImageColor):
+    self.targeting = targeting
+    self.rangeImageColor = rangeImageColor
+    self.UpdateRangeImage()
